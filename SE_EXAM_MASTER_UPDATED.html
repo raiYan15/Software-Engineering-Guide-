@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>22CS307 – Software Engineering: Complete Exam Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --card: #1e2335;
+    --border: #2a3050;
+    --accent: #4f9cf9;
+    --accent2: #f4a261;
+    --accent3: #56c989;
+    --accent4: #e07ab1;
+    --text: #dce3f0;
+    --muted: #8494b5;
+    --eq: #ffe066;
+    --module1: #3b82f6;
+    --module2: #f59e0b;
+    --heading: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* SIDEBAR + LAYOUT */
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 270px;
+    min-width: 270px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 20px 0;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  .sidebar-brand {
+    padding: 0 20px 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .sidebar-brand h1 { font-size: 16px; color: var(--accent); font-weight: 800; }
+  .sidebar-brand p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .sidebar-section { padding: 4px 20px; margin-top: 8px; }
+  .sidebar-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  .sidebar a {
+    display: block;
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .sidebar a:hover { background: var(--card); color: var(--accent); }
+  .sidebar a.m1 { border-left: 3px solid var(--module1); }
+  .sidebar a.m2 { border-left: 3px solid var(--module2); }
+  .sidebar a.resource { border-left: 3px solid var(--accent4); color: var(--accent4); font-weight: 700; }
+  .sidebar a.resource:hover { background: rgba(224,122,177,0.1); }
+  .sidebar a.uml { border-left: 3px solid var(--accent3); color: var(--accent3); font-weight: 700; }
+  .sidebar a.uml:hover { background: rgba(86,201,137,0.1); }
+
+  .paper-topic { border-top: 3px solid #e07ab1; }
+  .paper-topic-icon { background: rgba(224,122,177,0.15); }
+  .paper-meta {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .paper-meta p { margin: 0; font-size: 13px; color: var(--muted); }
+  .paper-summary { margin-top: 28px; }
+  .paper-summary ul { margin: 8px 0 0 20px; }
+  .uml-module-num { background: rgba(86,201,137,0.2); color: #56c989; }
+  .uml-topic { border-top: 3px solid var(--accent3); }
+  .uml-topic-icon { background: rgba(86,201,137,0.15); }
+  .uml-link {
+    color: var(--accent3);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .uml-link:hover { text-decoration: underline; }
+
+  .content {
+    margin-left: 270px;
+    flex: 1;
+    padding: 40px 50px 80px;
+    max-width: 1100px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a2540 0%, #0f1117 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "22CS307";
+    position: absolute; right: 30px; top: 20px;
+    font-size: 80px; font-weight: 900;
+    color: rgba(79,156,249,0.07);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero h1 { font-size: 28px; color: #fff; font-weight: 800; }
+  .hero p { color: var(--muted); margin-top: 8px; font-size: 14px; }
+  .hero .badges { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .badge {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 12px; font-weight: 700;
+  }
+  .badge.blue { color: var(--accent); border-color: var(--accent); }
+  .badge.orange { color: var(--accent2); border-color: var(--accent2); }
+  .badge.green { color: var(--accent3); border-color: var(--accent3); }
+
+  /* TOPIC CARD */
+  .topic {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 28px;
+    scroll-margin-top: 20px;
+  }
+  .topic.m1 { border-top: 3px solid var(--module1); }
+  .topic.m2 { border-top: 3px solid var(--module2); }
+
+  .topic-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .topic-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .icon-m1 { background: rgba(59,130,246,0.15); }
+  .icon-m2 { background: rgba(245,158,11,0.15); }
+
+  .topic h2 {
+    font-size: 20px;
+    color: var(--heading);
+    font-weight: 800;
+    font-family: 'Merriweather', serif;
+  }
+  .topic .marks-badge {
+    margin-left: auto;
+    background: rgba(79,156,249,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(79,156,249,0.3);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  h3 {
+    font-size: 15px;
+    color: var(--accent2);
+    font-weight: 800;
+    margin: 20px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  h4 {
+    font-size: 14px;
+    color: var(--accent3);
+    font-weight: 700;
+    margin: 14px 0 6px;
+  }
+
+  p { margin-bottom: 10px; color: var(--text); }
+
+  ul, ol {
+    padding-left: 22px;
+    margin-bottom: 12px;
+  }
+  li { margin-bottom: 5px; }
+
+  /* DEFINITION BOX */
+  .def-box {
+    background: #0f1117;
+    border: 1px solid #2a3050;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 13px;
+  }
+  .compare-table th {
+    background: rgba(79,156,249,0.12);
+    color: var(--accent);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border);
+  }
+  .compare-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* HIGHLIGHT BOXES */
+  .info-box {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .info-box.blue { background: rgba(79,156,249,0.08); border-left: 4px solid var(--accent); }
+  .info-box.orange { background: rgba(244,162,97,0.08); border-left: 4px solid var(--accent2); }
+  .info-box.green { background: rgba(86,201,137,0.08); border-left: 4px solid var(--accent3); }
+  .info-box strong { color: #fff; }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .flow-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+  }
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--muted);
+    margin: 0 6px;
+  }
+
+  /* ADVANTAGE/DISADVANTAGE */
+  .adv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 12px 0;
+  }
+  .adv-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 13px;
+  }
+  .adv-box h5 { margin-bottom: 10px; font-weight: 700; }
+  .adv-box ul { margin: 0; }
+  .adv-pros { border-left: 4px solid var(--accent3); }
+  .adv-cons { border-left: 4px solid #ef4444; }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: rgba(224,122,177,0.07);
+    border: 1px dashed var(--accent4);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .exam-tip::before { content: "⭐ EXAM TIP: "; color: var(--accent4); font-weight: 800; }
+
+  /* MODULE HEADER */
+  .module-header {
+    background: linear-gradient(90deg, rgba(59,130,246,0.15) 0%, transparent 100%);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin: 36px 0 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .module-header.m2 {
+    background: linear-gradient(90deg, rgba(245,158,11,0.15) 0%, transparent 100%);
+    border-color: rgba(245,158,11,0.3);
+  }
+  .module-num {
+    font-size: 32px; font-weight: 900;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .module-num.m1 { color: var(--module1); }
+  .module-num.m2 { color: var(--module2); }
+  .module-header h2 { font-size: 18px; color: #fff; font-weight: 800; }
+  .module-header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* UML GALLERY */
+  .uml-subheading {
+    margin: 22px 0 12px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .uml-subheading::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent3);
+    box-shadow: 0 0 0 4px rgba(86,201,137,0.12);
+  }
+  .uml-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 12px 0 18px;
+  }
+  .uml-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .uml-card h4 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    color: var(--accent3);
+    font-size: 14px;
+  }
+  .uml-card p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .mermaid {
+    background: #111622;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    overflow-x: auto;
+    font-size: 12px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 12px 0;
+  }
+  .col-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 13px;
+  }
+  .col-card h5 { color: var(--accent); font-weight: 800; margin-bottom: 8px; font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .content { margin-left: 0; padding: 20px; }
+    .two-col { grid-template-columns: 1fr; }
+    .adv-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+</script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <h1>22CS307 · SE Guide</h1>
+    <p>III B.Tech II Sem · VFSTR</p>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Module 1</div>
+    <a href="#se-intro" class="m1">Software Engineering</a>
+    <a href="#characteristics" class="m1">Software Characteristics</a>
+    <a href="#myths" class="m1">Software Myths</a>
+    <a href="#sdlc" class="m1">SDLC</a>
+    <a href="#waterfall" class="m1">Waterfall Model</a>
+    <a href="#cmmi" class="m1">CMMI</a>
+    <a href="#agile" class="m1">Agile & Scrum</a>
+    <a href="#xp" class="m1">Extreme Programming</a>
+    <a href="#project-planning" class="m1">Project Planning</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Module 2</div>
+    <a href="#requirements" class="m2">Requirements Engineering</a>
+    <a href="#func-nonfunc" class="m2">FR vs NFR</a>
+    <a href="#feasibility" class="m2">Feasibility Study</a>
+    <a href="#data-modeling" class="m2">UML & Data Modeling</a>
+    <a href="#ui-design" class="m2">UI Design & Golden Rules</a>
+    <a href="#testing-strategy" class="m2">Testing Strategy</a>
+    <a href="#unit-integration" class="m2">Unit & Integration Testing</a>
+    <a href="#blackwhite" class="m2">Black Box vs White Box</a>
+    <a href="#debugging" class="m2">Debugging</a>
+    <a href="#metrics" class="m2">Software Metrics</a>
+    <a href="#risk-management" class="m2">Risk Management</a>
+    <a href="#rmmm" class="m2">RMMM</a>
+    <a href="#quality" class="m2">Quality & FTR</a>
+    <a href="#ssqa" class="m2">SSQA</a>
+    <a href="#case-tools" class="m2">CASE Tools</a>
+    <a href="#req-tools" class="m2">Requirement Tools</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">📋 Resources</div>
+    <a href="#uml-diagrams" class="uml">UML Diagrams</a>
+    <a href="#question-papers" class="resource">Question Papers</a>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>💻 Software Engineering – Complete Exam Guide</h1>
+    <p>22CS307 · CSE · III Year II Semester · VFSTR University</p>
+    <div class="badges">
+      <span class="badge blue">60 Marks Exam</span>
+      <span class="badge orange">150 Minutes</span>
+      <span class="badge green">4 Units Covered</span>
+      <span class="badge blue">Module 1 & 2</span>
+    </div>
+  </div>
+
+  <div class="info-box blue">
+    <strong>Exam Pattern:</strong> Answer ALL 4 questions × 8 marks (32M) + Answer ALL 2 questions × 14 marks (28M) = 60M total. This guide covers every topic as complete, exam-ready answers in simple language.
+  </div>
+
+  <!-- ===== MODULE 1 ===== -->
+  <div class="module-header">
+    <div class="module-num m1">M1</div>
+    <div>
+      <h2>Module 1 – Software Engineering Fundamentals & SDLC</h2>
+      <p>SE Introduction · SDLC Models · Process Frameworks · Agile Methodologies</p>
+    </div>
+  </div>
+
+  <!-- SOFTWARE ENGINEERING -->
+  <div class="topic m1" id="se-intro">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">💻</div>
+      <h2>Software Engineering</h2>
+      <span class="marks-badge">8-10 Marks</span>
+    </div>
+
+    <p>Software Engineering is the systematic, disciplined, and quantifiable approach to the development, operation, and maintenance of software. It applies engineering principles to software creation to produce correct, reliable, and maintainable software within budget and on schedule.</p>
+
+    <h3>4 Layers of Software Engineering</h3>
+    <div class="flow">
+      <div class="flow-box">🏆 Quality Focus (Foundation)</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">📋 Process (Framework)</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">⚙️ Methods (Technical How-To)</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">🔧 Tools (Automation Support)</div>
+    </div>
+
+    <h4>1. Quality Focus (Foundation)</h4>
+    <p>The most critical layer. Every SE activity aims for quality. Quality ensures reliability, maintainability, and user satisfaction.</p>
+
+    <h4>2. Process</h4>
+    <p>The framework that defines how software is developed (requirements → design → build → test → deploy → maintain). Examples: Waterfall, Spiral, Agile.</p>
+
+    <h4>3. Methods</h4>
+    <p>Technical procedures for each phase. Examples: Requirements analysis techniques, design patterns, testing strategies, coding standards.</p>
+
+    <h4>4. Tools</h4>
+    <p>Automated support for process and methods. Examples: IDEs, CASE tools, version control, testing frameworks, CI/CD pipelines.</p>
+
+    <h3>Qualities of Good Software (FURPS)</h3>
+    <ul>
+      <li><strong>Functionality:</strong> Does it do what users need?</li>
+      <li><strong>Usability:</strong> Is it easy to use?</li>
+      <li><strong>Reliability:</strong> Does it work consistently without crashes?</li>
+      <li><strong>Performance:</strong> Is it fast and efficient?</li>
+      <li><strong>Supportability:</strong> Can it be maintained and updated?</li>
+    </ul>
+
+    <div class="adv-grid">
+      <div class="adv-box adv-pros">
+        <h5>✅ Advantages of SE</h5>
+        <ul>
+          <li>Improves software quality</li>
+          <li>Reduces development cost</li>
+          <li>Ensures on-time delivery</li>
+          <li>Easier maintenance</li>
+          <li>Better documentation</li>
+        </ul>
+      </div>
+      <div class="adv-box adv-cons">
+        <h5>❌ Challenges</h5>
+        <ul>
+          <li>High initial cost</li>
+          <li>Requires trained team</li>
+          <li>Complex process</li>
+          <li>Time-consuming</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exam-tip">Always draw the 4-layer pyramid diagram. Every question about SE basics can be answered using these layers. Examiners reward clear diagrams.</div>
+  </div>
+
+  <!-- CHARACTERISTICS -->
+  <div class="topic m1" id="characteristics">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">🔍</div>
+      <h2>Software Characteristics vs Hardware</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <table class="compare-table">
+      <tr>
+        <th>Characteristic</th>
+        <th>Software</th>
+        <th>Hardware</th>
+      </tr>
+      <tr>
+        <td>Nature</td>
+        <td>Intangible (logical)</td>
+        <td>Physical/tangible</td>
+      </tr>
+      <tr>
+        <td>Development</td>
+        <td>Engineered, not manufactured</td>
+        <td>Manufactured/produced</td>
+      </tr>
+      <tr>
+        <td>Cost</td>
+        <td>High upfront (development), low copy cost</td>
+        <td>Low design, high manufacturing</td>
+      </tr>
+      <tr>
+        <td>Degradation</td>
+        <td>Doesn't wear out; gets obsolete through bugs</td>
+        <td>Wears out over time</td>
+      </tr>
+      <tr>
+        <td>Maintenance</td>
+        <td>Maintenance = fixing bugs + adding features</td>
+        <td>Maintenance = repair/replacement</td>
+      </tr>
+      <tr>
+        <td>Customization</td>
+        <td>Easy to customize per user needs</td>
+        <td>Difficult to customize</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SOFTWARE MYTHS -->
+  <div class="topic m1" id="myths">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">🚫</div>
+      <h2>Software Myths</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>Software myths are false beliefs held by managers, customers, and practitioners that lead to poor decisions and project failures.</p>
+
+    <h3>Management Myths</h3>
+    <ul>
+      <li><strong>Myth:</strong> Having a book of standards ensures quality<br><strong>Reality:</strong> Standards alone don't ensure quality. The team must follow and understand them.</li>
+      <li><strong>Myth:</strong> Adding more programmers speeds up a late project<br><strong>Reality:</strong> Adding people mid-project slows it down (Brooks' Law)</li>
+      <li><strong>Myth:</strong> We can outsource and relax<br><strong>Reality:</strong> Outsourcing still requires active management and oversight</li>
+    </ul>
+
+    <h3>Customer Myths</h3>
+    <ul>
+      <li><strong>Myth:</strong> General objectives are enough; details come later<br><strong>Reality:</strong> Ambiguous requirements cause massive rework. Details are essential upfront.</li>
+      <li><strong>Myth:</strong> Software is flexible; change anytime<br><strong>Reality:</strong> Late changes are very costly. Early requirement stability is critical.</li>
+    </ul>
+
+    <h3>Practitioner Myths</h3>
+    <ul>
+      <li><strong>Myth:</strong> Once code works, the job is done<br><strong>Reality:</strong> Maintenance takes 60–80% of total software cost over its lifetime.</li>
+      <li><strong>Myth:</strong> Documentation is not important<br><strong>Reality:</strong> Documentation is crucial for maintenance and team handoffs.</li>
+    </ul>
+
+    <div class="exam-tip">Questions ask: "Explain any 3 myths and their reality." Pick from the three categories and explain clearly.</div>
+  </div>
+
+  <!-- SDLC -->
+  <div class="topic m1" id="sdlc">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">🔄</div>
+      <h2>SDLC – Software Development Life Cycle</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>SDLC is a structured process that defines the phases involved in software development from initial concept to final delivery and maintenance. It provides a framework for planning, creating, testing, and delivering software systems.</p>
+
+    <h3>6 SDLC Phases</h3>
+    <div class="flow">
+      <div class="flow-box">1️⃣ Requirement Analysis</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">2️⃣ Design</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">3️⃣ Implementation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">4️⃣ Testing</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">5️⃣ Deployment</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">6️⃣ Maintenance</div>
+    </div>
+
+    <h4>Phase 1: Requirement Analysis</h4>
+    <p>Gather what users and stakeholders need from the system. Output: Software Requirements Specification (SRS) document.</p>
+
+    <h4>Phase 2: System Design</h4>
+    <p>Create the architecture and detailed design (database schema, UI mockups, API specifications). Output: Design Document.</p>
+
+    <h4>Phase 3: Implementation (Coding)</h4>
+    <p>Write the actual code in chosen programming language(s) based on the design.</p>
+
+    <h4>Phase 4: Testing</h4>
+    <p>Test for bugs and ensure quality. Unit → Integration → System → Acceptance testing.</p>
+
+    <h4>Phase 5: Deployment</h4>
+    <p>Release to end users (production environment).</p>
+
+    <h4>Phase 6: Maintenance</h4>
+    <p>Fix bugs, apply patches, add enhancements. This phase lasts the longest.</p>
+
+    <div class="exam-tip">Draw the SDLC waterfall diagram with all 6 phases. Label each phase clearly. Examiners award marks even if explanation is brief.</div>
+  </div>
+
+  <!-- WATERFALL MODEL -->
+  <div class="topic m1" id="waterfall">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">💧</div>
+      <h2>Waterfall Model</h2>
+      <span class="marks-badge">8 Marks</span>
+    </div>
+
+    <p>Waterfall is the first and most classic SDLC model. It is sequential and linear — each phase must be completed before the next begins. No going back, like water flowing downward.</p>
+
+    <h3>Waterfall Flow</h3>
+    <div class="flow">
+      <div class="flow-box">Requirements</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">Design</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">Implementation</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">Testing</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">Deployment</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-box">Maintenance</div>
+    </div>
+
+    <div class="adv-grid">
+      <div class="adv-box adv-pros">
+        <h5>✅ Advantages</h5>
+        <ul>
+          <li>Simple and easy to understand</li>
+          <li>Well-defined phases & milestones</li>
+          <li>Easy to manage small projects</li>
+          <li>Good documentation</li>
+        </ul>
+      </div>
+      <div class="adv-box adv-cons">
+        <h5>❌ Disadvantages</h5>
+        <ul>
+          <li>No customer feedback mid-process</li>
+          <li>Testing only at the end</li>
+          <li>Cannot accommodate changes</li>
+          <li>High risk for complex projects</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>When to Use Waterfall</h3>
+    <ul>
+      <li>Requirements are clear and fixed upfront</li>
+      <li>Project scope is well-defined</li>
+      <li>Small to medium projects</li>
+      <li>Technology is stable and known</li>
+      <li>Team is not distributed</li>
+    </ul>
+
+    <div class="exam-tip">Compare Waterfall vs Agile/Spiral in 8-mark questions. Create a comparison table showing model names, advantages, disadvantages, and when to use each.</div>
+  </div>
+
+  <!-- CMMI -->
+  <div class="topic m1" id="cmmi">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">📊</div>
+      <h2>CMMI – Capability Maturity Model Integration</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>CMMI is a process improvement framework that helps organizations enhance their software development processes. It defines 5 maturity levels that measure process sophistication.</p>
+
+    <h3>5 Maturity Levels (I M D Q O)</h3>
+    <div class="flow">
+      <div class="flow-box">Level 5: Optimizing</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">Level 4: Quantitatively Managed</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">Level 3: Defined</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">Level 2: Managed</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">Level 1: Initial (Ad-hoc)</div>
+    </div>
+
+    <table class="compare-table">
+      <tr>
+        <th>Level</th>
+        <th>Name</th>
+        <th>Characteristics</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Initial</td>
+        <td>Unpredictable, poorly controlled, reactive processes</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Managed</td>
+        <td>Basic project management, repeatable processes</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Defined</td>
+        <td>Standardized & documented processes across organization</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Quantitatively Managed</td>
+        <td>Processes measured & controlled using metrics</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Optimizing</td>
+        <td>Continuous process improvement focus</td>
+      </tr>
+    </table>
+
+    <p>Most companies target Level 3 or above. Level 5 is aspirational and expensive to achieve.</p>
+  </div>
+
+  <!-- AGILE & SCRUM -->
+  <div class="topic m1" id="agile">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">🏃</div>
+      <h2>Agile Methodology & Scrum</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>Agile is an iterative and incremental software development methodology that emphasizes collaboration, flexibility, and delivering working software in short cycles (sprints). It values individuals and interactions over rigid processes.</p>
+
+    <h3>Agile Manifesto — 4 Core Values</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h5>Individuals & Interactions</h5>
+        <p>over processes and tools</p>
+      </div>
+      <div class="col-card">
+        <h5>Working Software</h5>
+        <p>over comprehensive documentation</p>
+      </div>
+      <div class="col-card">
+        <h5>Customer Collaboration</h5>
+        <p>over contract negotiation</p>
+      </div>
+      <div class="col-card">
+        <h5>Responding to Change</h5>
+        <p>over following a plan</p>
+      </div>
+    </div>
+
+    <h3>Scrum Framework</h3>
+    <h4>3 Scrum Roles</h4>
+    <ul>
+      <li><strong>Product Owner:</strong> Defines requirements, prioritizes backlog, represents stakeholders</li>
+      <li><strong>Scrum Master:</strong> Facilitates meetings, removes blockers, ensures team follows Scrum</li>
+      <li><strong>Development Team:</strong> Self-organizing, cross-functional team that builds the product</li>
+    </ul>
+
+    <h4>Scrum Events</h4>
+    <ul>
+      <li><strong>Sprint Planning:</strong> Team plans work for the upcoming sprint</li>
+      <li><strong>Daily Standup:</strong> 15-minute daily meeting to sync on progress</li>
+      <li><strong>Sprint Review:</strong> Demo working software to stakeholders</li>
+      <li><strong>Sprint Retrospective:</strong> Team reflects on how to improve</li>
+    </ul>
+
+    <h4>Scrum Artifacts</h4>
+    <ul>
+      <li><strong>Product Backlog:</strong> Prioritized list of all features needed</li>
+      <li><strong>Sprint Backlog:</strong> Work selected for the current sprint</li>
+      <li><strong>Increment:</strong> Working software delivered at end of sprint</li>
+    </ul>
+
+    <table class="compare-table">
+      <tr>
+        <th>Aspect</th>
+        <th>Agile</th>
+        <th>Waterfall</th>
+      </tr>
+      <tr>
+        <td>Development style</td>
+        <td>Iterative & flexible</td>
+        <td>Linear & rigid</td>
+      </tr>
+      <tr>
+        <td>Customer involvement</td>
+        <td>Throughout the project</td>
+        <td>Only at start/end</td>
+      </tr>
+      <tr>
+        <td>Working software</td>
+        <td>In weeks</td>
+        <td>At end of project</td>
+      </tr>
+      <tr>
+        <td>Change handling</td>
+        <td>Changes welcomed anytime</td>
+        <td>Changes are costly</td>
+      </tr>
+      <tr>
+        <td>Best for</td>
+        <td>Evolving requirements</td>
+        <td>Fixed requirements</td>
+      </tr>
+    </table>
+
+    <div class="exam-tip">Draw the Scrum cycle diagram showing: Product Backlog → Sprint Planning → Sprint (2-4 weeks) → Sprint Review → Product Increment. Mention all 3 roles and 4 events.</div>
+  </div>
+
+  <!-- EXTREME PROGRAMMING -->
+  <div class="topic m1" id="xp">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">⚡</div>
+      <h2>Extreme Programming (XP)</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>Extreme Programming is an Agile software development methodology that emphasizes technical excellence and good software engineering practices through short development cycles and continuous customer feedback.</p>
+
+    <h3>Key XP Practices</h3>
+    <ul>
+      <li><strong>Test-Driven Development (TDD):</strong> Write tests BEFORE writing code. Red-Green-Refactor cycle.</li>
+      <li><strong>Pair Programming:</strong> Two developers work together on one machine, improving code quality and knowledge sharing</li>
+      <li><strong>Continuous Integration:</strong> Code is integrated and tested multiple times per day</li>
+      <li><strong>Refactoring:</strong> Continuously improve code structure without changing functionality</li>
+      <li><strong>Small Releases:</strong> Frequent, small releases with working features</li>
+      <li><strong>Simple Design:</strong> Do the simplest thing that works; avoid over-engineering</li>
+      <li><strong>Collective Ownership:</strong> Any team member can modify any code (with tests)</li>
+      <li><strong>Coding Standards:</strong> Follow agreed conventions for consistency</li>
+    </ul>
+
+    <div class="exam-tip">XP is often asked in comparison with other methodologies. Know TDD (Test-Driven Development) as the core practice. Real-world XP is used at Google, Facebook, and many startups.</div>
+  </div>
+
+  <!-- PROJECT PLANNING -->
+  <div class="topic m1" id="project-planning">
+    <div class="topic-header">
+      <div class="topic-icon icon-m1">📅</div>
+      <h2>Project Planning & Scheduling</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>Software project planning involves estimating resources, timelines, costs, and tasks required to complete a project successfully.</p>
+
+    <h3>Key Planning Activities</h3>
+    <ul>
+      <li><strong>Scope Definition:</strong> Define what will and won't be built</li>
+      <li><strong>Work Breakdown Structure (WBS):</strong> Break project into smaller, manageable tasks</li>
+      <li><strong>Effort Estimation:</strong> Estimate person-months or person-hours for each task</li>
+      <li><strong>Scheduling:</strong> Assign tasks to timeline (Gantt charts, PERT/CPM)</li>
+      <li><strong>Resource Allocation:</strong> Assign team members to tasks</li>
+      <li><strong>Risk Planning:</strong> Identify and plan for potential risks</li>
+      <li><strong>Cost Estimation:</strong> Calculate project budget</li>
+    </ul>
+
+    <h3>Estimation Metrics</h3>
+    <ul>
+      <li><strong>LOC (Lines of Code):</strong> Size metric — total non-comment, executable lines</li>
+      <li><strong>KLOC:</strong> 1000 lines of code</li>
+      <li><strong>Function Points (FP):</strong> Measures functionality delivered, language-independent</li>
+      <li><strong>COCOMO Model:</strong> Effort = a × (KLOC)^b (for effort estimation)</li>
+    </ul>
+
+    <div class="exam-tip">Questions ask about WBS (Work Breakdown Structure) and estimation techniques. Understand the difference between effort estimation and schedule estimation.</div>
+  </div>
+
+  <!-- ===== MODULE 2 ===== -->
+  <div class="module-header m2">
+    <div class="module-num m2">M2</div>
+    <div>
+      <h2>Module 2 – Requirements, Testing, Quality, and Risk Management</h2>
+      <p>Requirements Engineering · Testing Strategies · Software Metrics · Quality Assurance · CASE Tools</p>
+    </div>
+  </div>
+
+  <!-- REQUIREMENTS ENGINEERING -->
+  <div class="topic m2" id="requirements">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">📋</div>
+      <h2>Requirements Engineering</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>Requirements Engineering is the process of defining, documenting, and maintaining software requirements. It involves understanding stakeholder needs and documenting them in a Software Requirements Specification (SRS) document.</p>
+
+    <h3>RE Process (6 Steps)</h3>
+    <div class="flow">
+      <div class="flow-box">1️⃣ Inception</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">2️⃣ Elicitation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">3️⃣ Elaboration</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">4️⃣ Negotiation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">5️⃣ Specification</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">6️⃣ Validation</div>
+    </div>
+
+    <h4>Inception:</h4>
+    <p>Understand the basic problem and identify stakeholders.</p>
+
+    <h4>Elicitation:</h4>
+    <p>Gather requirements via interviews, surveys, observations, brainstorming sessions.</p>
+
+    <h4>Elaboration:</h4>
+    <p>Create analysis models (use cases, data flow diagrams, ERD). Understand system interactions.</p>
+
+    <h4>Negotiation:</h4>
+    <p>Resolve conflicting requirements between stakeholders. Prioritize features.</p>
+
+    <h4>Specification:</h4>
+    <p>Write formal SRS (Software Requirements Specification) document with all requirements in detail.</p>
+
+    <h4>Validation:</h4>
+    <p>Review SRS with stakeholders to ensure it's correct, complete, consistent, and testable.</p>
+
+    <h3>SRS Contents</h3>
+    <ul>
+      <li>System overview and objectives</li>
+      <li>Functional requirements (features)</li>
+      <li>Non-functional requirements (performance, security, etc.)</li>
+      <li>Use cases and scenarios</li>
+      <li>Data models and interfaces</li>
+      <li>Constraints and assumptions</li>
+    </ul>
+
+    <div class="exam-tip">Draw the 6-step RE process. Questions ask: "Explain Requirements Engineering" or "What does SRS contain?" Answer with the 6 steps and SRS contents.</div>
+  </div>
+
+  <!-- FUNCTIONAL vs NON-FUNCTIONAL -->
+  <div class="topic m2" id="func-nonfunc">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">⚖️</div>
+      <h2>Functional vs Non-Functional Requirements</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <table class="compare-table">
+      <tr>
+        <th>Aspect</th>
+        <th>Functional Requirements (FR)</th>
+        <th>Non-Functional Requirements (NFR)</th>
+      </tr>
+      <tr>
+        <td>Focus</td>
+        <td>What system does</td>
+        <td>How system performs</td>
+      </tr>
+      <tr>
+        <td>Examples</td>
+        <td>Login, Search, Make payment, Generate reports</td>
+        <td>Response time < 2 sec, 99.9% uptime, Support 1000 users</td>
+      </tr>
+      <tr>
+        <td>Testing</td>
+        <td>Easy to test (pass/fail)</td>
+        <td>Difficult to measure precisely</td>
+      </tr>
+      <tr>
+        <td>Source</td>
+        <td>User/business needs</td>
+        <td>System constraints & quality attributes</td>
+      </tr>
+      <tr>
+        <td>Change impact</td>
+        <td>High impact on design</td>
+        <td>Affects architecture decisions</td>
+      </tr>
+    </table>
+
+    <h3>FURPS+ (NFR Classification)</h3>
+    <ul>
+      <li><strong>F - Functionality:</strong> What the system does (actually FR)</li>
+      <li><strong>U - Usability:</strong> Ease of use, UI quality, accessibility</li>
+      <li><strong>R - Reliability:</strong> Availability, failure frequency, recovery</li>
+      <li><strong>P - Performance:</strong> Response time, throughput, scalability</li>
+      <li><strong>S - Supportability:</strong> Maintainability, portability, compatibility</li>
+      <li><strong>+ others:</strong> Security, compliance, legal constraints</li>
+    </ul>
+
+    <div class="exam-tip">FURPS is frequently asked. Remember: FR tells WHAT, NFR tells HOW GOOD. Always give examples when differentiating.</div>
+  </div>
+
+  <!-- FEASIBILITY STUDY -->
+  <div class="topic m2" id="feasibility">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🔬</div>
+      <h2>Feasibility Study</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>A feasibility study evaluates whether a proposed project is technically possible, economically viable, operationally practical, and legally/ethically acceptable before committing significant resources.</p>
+
+    <h3>4 Types of Feasibility</h3>
+
+    <h4>1. Technical Feasibility</h4>
+    <p>Can we build it with available technology? Do we have the required tools, platforms, expertise, and infrastructure?</p>
+    <ul>
+      <li>Is technology mature and stable?</li>
+      <li>Do we have skilled developers?</li>
+      <li>Are third-party libraries available?</li>
+    </ul>
+
+    <h4>2. Economic Feasibility</h4>
+    <p>Is the project worth the cost? Calculate ROI (Return on Investment).</p>
+    <ul>
+      <li>Project cost vs. expected benefits</li>
+      <li>Payback period</li>
+      <li>Cost-benefit analysis</li>
+    </ul>
+
+    <h4>3. Operational Feasibility</h4>
+    <p>Will users accept and use the system? Is it practical for day-to-day operations?</p>
+    <ul>
+      <li>User training requirements</li>
+      <li>Change management needs</li>
+      <li>Organizational readiness</li>
+    </ul>
+
+    <h4>4. Schedule Feasibility</h4>
+    <p>Can we deliver the project on time? Do we have realistic deadlines?</p>
+    <ul>
+      <li>Project duration estimate</li>
+      <li>Resource availability</li>
+      <li>Dependency analysis</li>
+    </ul>
+
+    <div class="exam-tip">Feasibility study is conducted BEFORE development. If any feasibility is questionable, the project may be rejected or postponed.</div>
+  </div>
+
+  <!-- DATA MODELING & UML -->
+  <div class="topic m2" id="data-modeling">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🗂️</div>
+      <h2>Data Modeling & UML Class Diagrams</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>Data modeling creates a conceptual representation of data structures and relationships. UML Class Diagrams represent the static structure of a system by showing classes, attributes, methods, and relationships.</p>
+
+    <h3>UML Class Diagram Structure</h3>
+    <div class="info-box blue">
+      Each class box has 3 sections:<br>
+      <strong>Top:</strong> Class name<br>
+      <strong>Middle:</strong> Attributes (data members)<br>
+      <strong>Bottom:</strong> Methods (operations)
+    </div>
+
+    <h4>Access Modifiers</h4>
+    <ul>
+      <li><strong>+ Public:</strong> Accessible from anywhere</li>
+      <li><strong>- Private:</strong> Accessible only within the class</li>
+      <li><strong># Protected:</strong> Accessible within class and subclasses</li>
+    </ul>
+
+    <h3>Relationships</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Relationship</th>
+        <th>Symbol</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td>Association</td>
+        <td>————</td>
+        <td>General connection between classes</td>
+      </tr>
+      <tr>
+        <td>Aggregation (weak)</td>
+        <td>———◇</td>
+        <td>"Has-a": Part can exist independently</td>
+      </tr>
+      <tr>
+        <td>Composition (strong)</td>
+        <td>———◆</td>
+        <td>"Has-a": Part cannot exist without whole</td>
+      </tr>
+      <tr>
+        <td>Inheritance</td>
+        <td>———▷</td>
+        <td>"Is-a": Subclass extends parent class</td>
+      </tr>
+      <tr>
+        <td>Dependency</td>
+        <td>- - - ▷</td>
+        <td>Temporary use relationship</td>
+      </tr>
+    </table>
+
+    <h3>Cardinality & Modality</h3>
+    <ul>
+      <li><strong>Cardinality:</strong> How many instances can participate (1:1, 1:N, M:N)</li>
+      <li><strong>Modality:</strong> Whether participation is mandatory (1) or optional (0)</li>
+      <li>Example: One Student enrolls in Many Courses (1:N)</li>
+    </ul>
+
+    <div class="exam-tip">Draw a complete class diagram example (Student-Course-Instructor). Show all 3 sections of class boxes. Label cardinality and modality on relationships. Show inheritance, aggregation, and association.</div>
+  </div>
+
+  <!-- UI DESIGN -->
+  <div class="topic m2" id="ui-design">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🎨</div>
+      <h2>UI Design & Golden Rules</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>User Interface (UI) Design is the process of creating interfaces that allow users to interact with software effectively and pleasantly. Good UI follows established principles to ensure usability.</p>
+
+    <h3>Shneiderman's 8 Golden Rules of UI Design</h3>
+    <ol>
+      <li><strong>Strive for consistency:</strong> Use same operations, terminology, colors for similar tasks</li>
+      <li><strong>Enable frequent users to use shortcuts:</strong> Keyboard shortcuts, command abbreviations</li>
+      <li><strong>Offer informative feedback:</strong> System should communicate what it's doing</li>
+      <li><strong>Design dialog to yield closure:</strong> Clear sequence with beginning, middle, end</li>
+      <li><strong>Prevent errors:</strong> Design to prevent problems before they occur</li>
+      <li><strong>Permit easy reversal of actions:</strong> Provide undo/redo functionality</li>
+      <li><strong>Support internal locus of control:</strong> Users should feel in control, not controlled by system</li>
+      <li><strong>Reduce short-term memory load:</strong> Don't require users to remember info; show it</li>
+    </ol>
+
+    <h3>Architectural Styles</h3>
+    <ul>
+      <li><strong>MVC (Model-View-Controller):</strong> Separates data, presentation, and logic</li>
+      <li><strong>Layered Architecture:</strong> Presentation → Business Logic → Data layers</li>
+      <li><strong>Repository Pattern:</strong> Central data store accessed by components</li>
+      <li><strong>Client-Server:</strong> Server provides services to multiple clients</li>
+    </ul>
+
+    <div class="exam-tip">Questions ask to explain Shneiderman's rules or Golden Rules. Just list all 8 with brief explanation. Also be ready to explain good UI vs bad UI examples.</div>
+  </div>
+
+  <!-- TESTING STRATEGY -->
+  <div class="topic m2" id="testing-strategy">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🧪</div>
+      <h2>Testing Strategy & Types</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>A software testing strategy is a plan that defines the approach, levels, types, and techniques of testing throughout development. It ensures the software meets requirements and quality standards.</p>
+
+    <h3>Verification vs Validation (V&V)</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Verification</th>
+        <th>Validation</th>
+      </tr>
+      <tr>
+        <td>Are we building the product RIGHT?</td>
+        <td>Are we building the RIGHT product?</td>
+      </tr>
+      <tr>
+        <td>Process-oriented</td>
+        <td>Product-oriented</td>
+      </tr>
+      <tr>
+        <td>Reviews, walkthroughs, inspections (static)</td>
+        <td>Running the software (dynamic)</td>
+      </tr>
+      <tr>
+        <td>During development</td>
+        <td>At end of development</td>
+      </tr>
+    </table>
+
+    <h3>4 Levels of Testing (Pyramid)</h3>
+    <div class="flow">
+      <div class="flow-box">🏔️ System Testing</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">🔍 Integration Testing</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">🔬 Unit Testing</div>
+      <div class="flow-arrow">↑</div>
+      <div class="flow-box">📋 Acceptance Testing</div>
+    </div>
+
+    <h4>1. Unit Testing</h4>
+    <p>Test individual modules/functions in isolation. Uses stubs and drivers. Done by developers.</p>
+
+    <h4>2. Integration Testing</h4>
+    <p>Test how multiple units work together. Check interfaces and data flow between modules.</p>
+
+    <h4>3. System Testing</h4>
+    <p>Test the complete integrated system against requirements. End-to-end testing.</p>
+
+    <h4>4. Acceptance/User Testing</h4>
+    <p>Users/stakeholders test if system meets their needs. UAT (User Acceptance Testing).</p>
+
+    <div class="exam-tip">Draw the testing pyramid with all 4 levels. Always include V&V distinction. Questions frequently ask about testing hierarchy and the difference between each level.</div>
+  </div>
+
+  <!-- UNIT & INTEGRATION TESTING -->
+  <div class="topic m2" id="unit-integration">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🔬</div>
+      <h2>Unit & Integration Testing</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>Unit testing tests individual components in isolation. Integration testing tests how components interact.</p>
+
+    <h3>Unit Testing</h3>
+    <ul>
+      <li>Tests individual functions, methods, or modules</li>
+      <li>Done in isolation from rest of system</li>
+      <li>Uses test cases with expected inputs and outputs</li>
+      <li>Done by developers</li>
+      <li>Fast and catches bugs early</li>
+    </ul>
+
+    <h3>Test Drivers & Stubs</h3>
+    <ul>
+      <li><strong>Test Driver:</strong> A dummy program that calls the module being tested and supplies test data</li>
+      <li><strong>Stub:</strong> A dummy program that simulates the behavior of a called module (returns dummy results)</li>
+    </ul>
+
+    <h3>Integration Testing Approaches</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Approach</th>
+        <th>Method</th>
+        <th>Pros</th>
+        <th>Cons</th>
+      </tr>
+      <tr>
+        <td>Top-Down</td>
+        <td>Start from main, go down. Uses stubs.</td>
+        <td>Tests control flow early</td>
+        <td>Need many stubs</td>
+      </tr>
+      <tr>
+        <td>Bottom-Up</td>
+        <td>Start from leaf modules, go up. Uses drivers.</td>
+        <td>Real modules tested thoroughly</td>
+        <td>Delays control flow testing</td>
+      </tr>
+      <tr>
+        <td>Big Bang</td>
+        <td>Integrate all at once and test</td>
+        <td>Simple</td>
+        <td>Hard to find bugs</td>
+      </tr>
+    </table>
+
+    <div class="exam-tip">Questions ask to compare Top-Down vs Bottom-Up. Know the differences in tools used (stubs vs drivers) and what's tested first in each approach.</div>
+  </div>
+
+  <!-- BLACK BOX vs WHITE BOX TESTING -->
+  <div class="topic m2" id="blackwhite">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">⬛⬜</div>
+      <h2>Black Box vs White Box Testing</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <table class="compare-table">
+      <tr>
+        <th>Aspect</th>
+        <th>Black Box</th>
+        <th>White Box</th>
+      </tr>
+      <tr>
+        <td>Also called</td>
+        <td>Functional/Behavioral testing</td>
+        <td>Structural/Glass Box testing</td>
+      </tr>
+      <tr>
+        <td>Code visibility</td>
+        <td>No access to source code</td>
+        <td>Full access to source code</td>
+      </tr>
+      <tr>
+        <td>Focus</td>
+        <td>Input/Output</td>
+        <td>Code structure & logic</td>
+      </tr>
+      <tr>
+        <td>Tester background</td>
+        <td>QA testers (non-technical okay)</td>
+        <td>Developers</td>
+      </tr>
+      <tr>
+        <td>Techniques</td>
+        <td>Equivalence partitioning, Boundary value analysis</td>
+        <td>Basis path, Loop testing, Statement/branch coverage</td>
+      </tr>
+      <tr>
+        <td>Dependency</td>
+        <td>Independent of implementation</td>
+        <td>Depends on code structure</td>
+      </tr>
+    </table>
+
+    <h3>Black Box Techniques</h3>
+    <ul>
+      <li><strong>Equivalence Partitioning:</strong> Divide inputs into valid/invalid classes, test one from each</li>
+      <li><strong>Boundary Value Analysis:</strong> Test values at edges (minimum, maximum, just below/above)</li>
+      <li><strong>Error Guessing:</strong> Based on experience, guess likely error cases</li>
+    </ul>
+
+    <h3>White Box Techniques</h3>
+    <ul>
+      <li><strong>Statement Coverage:</strong> Ensure every statement is executed at least once</li>
+      <li><strong>Branch Coverage:</strong> Ensure every if/else branch is taken</li>
+      <li><strong>Basis Path Testing:</strong> Use flowchart to find all independent paths</li>
+      <li><strong>Loop Testing:</strong> Test loops (zero iterations, one iteration, multiple)</li>
+    </ul>
+
+    <h3>Cyclomatic Complexity</h3>
+    <p>Measures code complexity — tells how many independent paths exist through code.</p>
+    <div class="def-box">
+      <strong>Formula:</strong> V(G) = E - N + 2P<br>
+      E = edges, N = nodes, P = connected components (usually 1)
+    </div>
+    <ul>
+      <li>V(G) = 1: Simple, single path</li>
+      <li>V(G) ≤ 10: Acceptable complexity</li>
+      <li>V(G) > 10: High complexity, high-risk code, needs lots of testing</li>
+    </ul>
+
+    <div class="exam-tip">Cyclomatic Complexity formula is frequently asked. Know how to calculate V(G) from a given flowchart. Also be ready to compare Black Box and White Box with real examples.</div>
+  </div>
+
+  <!-- DEBUGGING -->
+  <div class="topic m2" id="debugging">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🐛</div>
+      <h2>Art of Debugging</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>Debugging is the process of finding and fixing errors (bugs) in a program. It begins when a test case uncovers an error.</p>
+
+    <h3>Debugging Strategies</h3>
+
+    <h4>1. Brute Force (Print Statements)</h4>
+    <p>Add print statements or use debugger to output variable values throughout execution. Most common but least efficient.</p>
+    <ul>
+      <li>✅ Simple, easy to implement</li>
+      <li>❌ Time-consuming, error-prone</li>
+    </ul>
+
+    <h4>2. Backtracking</h4>
+    <p>Start from where the error occurs and trace backwards through code to find the root cause.</p>
+    <ul>
+      <li>✅ Effective for simple programs</li>
+      <li>❌ Difficult for large programs</li>
+    </ul>
+
+    <h4>3. Cause Elimination</h4>
+    <p>List all possible causes, design test cases to eliminate each one systematically (like binary search).</p>
+    <ul>
+      <li>✅ Logical, systematic approach</li>
+      <li>✅ Works well for complex programs</li>
+    </ul>
+
+    <div class="exam-tip">Questions ask to compare and explain these 3 debugging strategies. Provide examples for each approach.</div>
+  </div>
+
+  <!-- SOFTWARE METRICS -->
+  <div class="topic m2" id="metrics">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">📊</div>
+      <h2>Software Metrics</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>Software metrics are quantitative measures used to assess software quality, productivity, complexity, and progress. They help track projects and identify problem areas.</p>
+
+    <h3>Key Metrics</h3>
+
+    <h4>Size Metrics</h4>
+    <ul>
+      <li><strong>LOC (Lines of Code):</strong> Simple size metric — non-comment, executable lines</li>
+      <li><strong>KLOC:</strong> 1000 lines of code</li>
+      <li><strong>Function Points (FP):</strong> Measures functionality, language-independent</li>
+    </ul>
+
+    <h4>Complexity Metrics</h4>
+    <ul>
+      <li><strong>Cyclomatic Complexity V(G) = E - N + 2P:</strong> Number of independent paths</li>
+      <li><strong>Halstead Complexity:</strong> Based on number of operators and operands</li>
+    </ul>
+
+    <h4>Quality Metrics</h4>
+    <ul>
+      <li><strong>Defect Density = Defects / KLOC:</strong> Defects per 1000 lines (lower is better)</li>
+      <li><strong>MTBF = MTTF + MTTR:</strong> Mean Time Between Failures = Uptime + Downtime</li>
+      <li><strong>Reliability R(t) = e^(-λt):</strong> Exponential reliability model</li>
+      <li><strong>Code Coverage:</strong> % of code executed during testing</li>
+    </ul>
+
+    <h4>Productivity Metrics</h4>
+    <ul>
+      <li><strong>Productivity = LOC Delivered / Person-Month:</strong> How much code per developer per month</li>
+    </ul>
+
+    <table class="compare-table">
+      <tr>
+        <th>Metric Type</th>
+        <th>What It Measures</th>
+        <th>Examples</th>
+      </tr>
+      <tr>
+        <td>Analysis Metrics</td>
+        <td>Size of requirements</td>
+        <td>Function Points, Use Case Points</td>
+      </tr>
+      <tr>
+        <td>Design Metrics</td>
+        <td>Design quality</td>
+        <td>Coupling, Cohesion, Depth of Inheritance</td>
+      </tr>
+      <tr>
+        <td>Code Metrics</td>
+        <td>Code complexity</td>
+        <td>LOC, Cyclomatic Complexity</td>
+      </tr>
+      <tr>
+        <td>Testing Metrics</td>
+        <td>Test effectiveness</td>
+        <td>Defect Density, Code Coverage</td>
+      </tr>
+      <tr>
+        <td>Maintenance Metrics</td>
+        <td>Maintenance effort</td>
+        <td>MTBF, Change Request Rate</td>
+      </tr>
+    </table>
+
+    <div class="exam-tip">Know Cyclomatic Complexity formula and Defect Density formula. Questions ask to calculate these from given data. Always show step-by-step calculations.</div>
+  </div>
+
+  <!-- RISK MANAGEMENT -->
+  <div class="topic m2" id="risk-management">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">⚠️</div>
+      <h2>Software Risk Management</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>Risk is any condition or event that may cause harm to a software project in terms of schedule, budget, quality, or performance. Risk Management involves identifying, assessing, and planning responses to risks.</p>
+
+    <h3>Types of Risks</h3>
+    <ul>
+      <li><strong>Schedule Risk:</strong> Project delays, missing deadlines</li>
+      <li><strong>Budget Risk:</strong> Cost overruns, insufficient funding</li>
+      <li><strong>Technical Risk:</strong> Technology limitations, complex architecture</li>
+      <li><strong>Operational Risk:</strong> Hardware failures, user errors, environment issues</li>
+      <li><strong>Programmatic Risk:</strong> External constraints, contracts, organizational changes</li>
+    </ul>
+
+    <h3>Reactive vs Proactive Risk Management</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Aspect</th>
+        <th>Reactive (After Risk Occurs)</th>
+        <th>Proactive (Before Risk Occurs)</th>
+      </tr>
+      <tr>
+        <td>Approach</td>
+        <td>"Fire fighting" mode</td>
+        <td>Prevention-first approach</td>
+      </tr>
+      <tr>
+        <td>Cost</td>
+        <td>Higher</td>
+        <td>Lower</td>
+      </tr>
+      <tr>
+        <td>Planning</td>
+        <td>No risk plan</td>
+        <td>Formal RMMM plan</td>
+      </tr>
+      <tr>
+        <td>When</td>
+        <td>After problem occurs</td>
+        <td>During planning phase</td>
+      </tr>
+    </table>
+
+    <h3>Risk Exposure Calculation</h3>
+    <div class="def-box">
+      <strong>Formula:</strong> RE = P(UO) × C(UO)<br>
+      P(UO) = Probability of unsatisfactory outcome<br>
+      C(UO) = Cost/Impact if risk occurs
+    </div>
+
+    <div class="exam-tip">Proactive risk management is always better than reactive. Know the RMMM plan (next topic). Always contrast the two approaches in 8-10 mark questions.</div>
+  </div>
+
+  <!-- RMMM -->
+  <div class="topic m2" id="rmmm">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🛡️</div>
+      <h2>RMMM – Risk Mitigation, Monitoring & Management</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>RMMM is a formal plan for handling software risks. It defines how each identified risk will be mitigated, monitored, and managed throughout the project.</p>
+
+    <h3>RMMM Process Flow</h3>
+    <div class="flow">
+      <div class="flow-box">1️⃣ Risk Identification</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">2️⃣ Risk Projection</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">3️⃣ Risk Mitigation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">4️⃣ Risk Monitoring</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">5️⃣ Risk Management</div>
+    </div>
+
+    <h4>1. Risk Identification</h4>
+    <p>Discover all potential risks through brainstorming, expert interviews, historical data, checklists.</p>
+
+    <h4>2. Risk Projection (Assessment)</h4>
+    <p>Estimate probability and impact of each risk. Calculate risk exposure (RE = P × C).</p>
+
+    <h4>3. Risk Mitigation</h4>
+    <p>Define strategies to reduce probability or impact of each risk. Preventive actions.</p>
+    <ul>
+      <li>Avoid risk (change scope/technology)</li>
+      <li>Reduce probability (training, better tools)</li>
+      <li>Reduce impact (contingency plans, redundancy)</li>
+    </ul>
+
+    <h4>4. Risk Monitoring</h4>
+    <p>Track indicators showing if a risk is becoming real. Watch for "risk triggers."</p>
+    <ul>
+      <li>Regular risk review meetings</li>
+      <li>Track key indicators</li>
+      <li>Adjust mitigation strategies if needed</li>
+    </ul>
+
+    <h4>5. Risk Management (Contingency Planning)</h4>
+    <p>Execute contingency plans when risks actually occur. Have backup strategies ready.</p>
+
+    <div class="info-box orange">
+      <strong>Risk Table:</strong> A document that lists all identified risks with their probability, impact, RE, mitigation strategy, and monitoring triggers.
+    </div>
+
+    <div class="exam-tip">Questions ask to explain RMMM or create a risk table for a project scenario. Know all 5 steps and be able to explain each with examples.</div>
+  </div>
+
+  <!-- QUALITY & FTR -->
+  <div class="topic m2" id="quality">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🏆</div>
+      <h2>Software Quality & Formal Technical Review (FTR)</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>Software quality is the degree to which software meets specified requirements and satisfies user needs. Formal Technical Review (FTR) is a structured method to ensure quality through peer review.</p>
+
+    <h3>Quality Dimensions (FURPS+)</h3>
+    <ul>
+      <li><strong>Functionality:</strong> Does it do what users need?</li>
+      <li><strong>Usability:</strong> Is it easy to use?</li>
+      <li><strong>Reliability:</strong> Does it work consistently?</li>
+      <li><strong>Performance:</strong> Is it fast and efficient?</li>
+      <li><strong>Supportability:</strong> Can it be maintained?</li>
+      <li><strong>+ Security, Compliance, Portability</strong></li>
+    </ul>
+
+    <h3>Formal Technical Review (FTR)</h3>
+    <p>An FTR is a structured meeting where technical experts review software work products to find errors and ensure compliance with standards.</p>
+
+    <h4>FTR Goals</h4>
+    <ul>
+      <li>Uncover errors in function, logic, or implementation</li>
+      <li>Verify compliance with requirements and standards</li>
+      <li>Ensure code follows best practices</li>
+      <li>Make development more uniform and manageable</li>
+    </ul>
+
+    <h4>FTR Meeting Guidelines</h4>
+    <ul>
+      <li>Review the product, not the producer</li>
+      <li>Set an agenda and maintain focus</li>
+      <li>Limit debate and rebuttal</li>
+      <li>Maximum 2-hour meeting duration</li>
+      <li>Focus on finding problems, not solving them</li>
+      <li>Document all issues found</li>
+    </ul>
+
+    <h3>Types of Reviews</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Type</th>
+        <th>Formality</th>
+        <th>Participation</th>
+        <th>Focus</th>
+      </tr>
+      <tr>
+        <td>Walkthrough</td>
+        <td>Informal</td>
+        <td>Author leads, peers attend</td>
+        <td>Understanding & general issues</td>
+      </tr>
+      <tr>
+        <td>Inspection</td>
+        <td>Formal (FTR)</td>
+        <td>Trained inspectors, author present</td>
+        <td>Defect finding, metrics</td>
+      </tr>
+      <tr>
+        <td>Technical Review</td>
+        <td>Formal</td>
+        <td>Technical experts, management</td>
+        <td>Compliance, correctness, standards</td>
+      </tr>
+    </table>
+
+    <div class="exam-tip">FTR is a preventive quality technique (finds errors BEFORE testing). Questions ask to explain FTR goals, guidelines, or compare with other review types.</div>
+  </div>
+
+  <!-- SSQA -->
+  <div class="topic m2" id="ssqa">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">📈</div>
+      <h2>Statistical Software Quality Assurance (SSQA)</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <p>SSQA involves collecting and analyzing defect data to identify the causes of software errors and improve the development process systematically.</p>
+
+    <h3>SSQA Process</h3>
+    <ol>
+      <li>Collect defect information from all sources (testing, production, users)</li>
+      <li>Classify each defect by cause (incomplete spec, misunderstood requirement, implementation error, etc.)</li>
+      <li>Analyze using Pareto Analysis</li>
+      <li>Focus improvement efforts on vital few causes</li>
+      <li>Track and verify improvements</li>
+    </ol>
+
+    <h3>Pareto Analysis (80/20 Rule)</h3>
+    <p>80% of software defects come from 20% of causes. Focus resources on fixing those vital few causes for maximum impact.</p>
+    <ul>
+      <li>Create Pareto chart: defect categories vs frequency</li>
+      <li>Identify the "vital few" categories</li>
+      <li>Allocate resources to top causes</li>
+      <li>Re-measure after improvements</li>
+    </ul>
+
+    <div class="exam-tip">SSQA and Pareto Analysis are often asked together. Questions ask: "How is Pareto Analysis used in SSQA to improve quality?" Answer with the 80/20 concept and example.</div>
+  </div>
+
+  <!-- CASE TOOLS -->
+  <div class="topic m2" id="case-tools">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🛠️</div>
+      <h2>CASE Tools – Computer-Aided Software Engineering</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p>CASE tools are software applications that help developers in designing, developing, testing, and maintaining software. They automate and support SE activities to improve productivity and quality.</p>
+
+    <h3>Classification of CASE Tools</h3>
+
+    <h4>Upper CASE Tools (Early Phase Support)</h4>
+    <p>Support planning and analysis phases. Help with requirements gathering and system design.</p>
+    <ul>
+      <li>Requirement collection tools</li>
+      <li>Data modeling (ER diagrams)</li>
+      <li>UML diagram tools (StarUML, Visio)</li>
+      <li>System design documentation</li>
+      <li>DFD (Data Flow Diagram) creation</li>
+    </ul>
+
+    <h4>Lower CASE Tools (Late Phase Support)</h4>
+    <p>Support implementation, testing, and maintenance phases.</p>
+    <ul>
+      <li>IDEs (Eclipse, VS Code) — Code writing</li>
+      <li>Compilers and debuggers</li>
+      <li>Testing tools (Selenium, JUnit)</li>
+      <li>Version control (Git, GitHub)</li>
+      <li>Build tools (Maven, Gradle)</li>
+    </ul>
+
+    <h4>Integrated CASE Tools (Full SDLC)</h4>
+    <p>Combine Upper and Lower CASE. Cover entire software lifecycle in one tool.</p>
+    <ul>
+      <li>Rational Rose (IBM) — Modeling and development</li>
+      <li>Enterprise Architect (Sparx)</li>
+      <li>Microsoft Visual Studio</li>
+      <li>JetBrains IntelliJ IDEA</li>
+    </ul>
+
+    <table class="compare-table">
+      <tr>
+        <th>Aspect</th>
+        <th>Upper CASE</th>
+        <th>Lower CASE</th>
+        <th>Integrated CASE</th>
+      </tr>
+      <tr>
+        <td>Phase</td>
+        <td>Planning, Analysis, Design</td>
+        <td>Implementation, Testing, Maintenance</td>
+        <td>All phases</td>
+      </tr>
+      <tr>
+        <td>Purpose</td>
+        <td>Requirement modeling</td>
+        <td>Code generation & testing</td>
+        <td>Complete development</td>
+      </tr>
+      <tr>
+        <td>Cost</td>
+        <td>Moderate</td>
+        <td>Low to Moderate</td>
+        <td>High</td>
+      </tr>
+      <tr>
+        <td>Examples</td>
+        <td>StarUML, Visio, Lucidchart</td>
+        <td>Eclipse, Git, Junit</td>
+        <td>Visual Studio, EA, Rational</td>
+      </tr>
+    </table>
+
+    <div class="adv-grid">
+      <div class="adv-box adv-pros">
+        <h5>✅ Advantages of CASE Tools</h5>
+        <ul>
+          <li>Faster development</li>
+          <li>Better quality software</li>
+          <li>Fewer errors and rework</li>
+          <li>Easier maintenance</li>
+          <li>Better documentation</li>
+          <li>Saves time and cost</li>
+        </ul>
+      </div>
+      <div class="adv-box adv-cons">
+        <h5>❌ Disadvantages</h5>
+        <ul>
+          <li>High purchase cost</li>
+          <li>Training required</li>
+          <li>Not suitable for very small projects</li>
+          <li>Tool dependency risk</li>
+          <li>May reduce developer creativity</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exam-tip">Classify tools into Upper, Lower, Integrated. Give 2-3 examples of each type. Questions ask: "Explain Upper CASE and Lower CASE tools with examples." Draw a diagram showing which CASE tool applies to which SDLC phase.</div>
+  </div>
+
+  <!-- REQUIREMENT TOOLS -->
+  <div class="topic m2" id="req-tools">
+    <div class="topic-header">
+      <div class="topic-icon icon-m2">🗃️</div>
+      <h2>Requirement Engineering Tools</h2>
+      <span class="marks-badge">5 Marks</span>
+    </div>
+
+    <h3>Popular RE Tools</h3>
+
+    <h4>1. JIRA (Atlassian)</h4>
+    <p>Widely used for issue tracking, requirements management, sprint planning. Can track user stories, requirements, tasks. Integrates with Confluence for documentation.</p>
+
+    <h4>2. IBM DOORS (Dynamic Object-Oriented Requirements System)</h4>
+    <p>Enterprise-grade tool for managing large, complex requirements. Used in defense, aerospace, medical devices. Supports requirement traceability matrix.</p>
+
+    <h4>3. Confluence (Atlassian)</h4>
+    <p>Team collaboration and documentation tool. Ideal for writing, sharing, reviewing requirements documents. Easy to use and update.</p>
+
+    <h4>4. Enterprise Architect (Sparx Systems)</h4>
+    <p>Comprehensive UML modeling tool covering full SDLC. Supports requirements, design, testing. Includes traceability features.</p>
+
+    <h4>5. ReqTest</h4>
+    <p>Dedicated requirements management and test management. Allows traceability between requirements and test cases. Good for smaller projects.</p>
+
+    <h3>Key Features of Good RE Tools</h3>
+    <ul>
+      <li>Requirement capture and documentation</li>
+      <li>Version control and history tracking</li>
+      <li>Traceability matrix (requirements → design → code → tests)</li>
+      <li>Collaboration and commenting</li>
+      <li>Change management</li>
+      <li>Role-based access control</li>
+    </ul>
+
+    <div class="exam-tip">Questions ask to "explain any 3 RE tools and their features." Choose from the list above and mention key features for each tool.</div>
+  </div>
+
+  <!-- ===== QUESTION PAPERS ===== -->
+  <div class="module-header" id="question-papers">
+    <div class="module-num uml-module-num">📋</div>
+    <div>
+      <h2>Previous Question Papers</h2>
+      <p>Complete Past Exam Papers · Previous Semesters · All Questions with Marks</p>
+    </div>
+  </div>
+
+  <div class="info-box blue">
+    <strong>How to use these papers:</strong> Practice these papers in exam conditions (60/80 marks, 150 minutes). Check your answers against solutions. Focus on 10M ⭐ questions – they appear most frequently in exams. Time management is crucial!
+  </div>
+
+  <!-- PAPER 1: MAY 2024 -->
+  <div class="topic paper-topic">
+    <div class="topic-header">
+      <div class="topic-icon paper-topic-icon">📄</div>
+      <h2>Question Paper 1 – May 2024 Exam</h2>
+      <span class="marks-badge">80 Marks · 150 Minutes</span>
+    </div>
+
+    <div class="paper-meta">
+      <p><strong>Exam Code:</strong> 22CS307 · <strong>Date:</strong> May 2024 · <strong>Pattern:</strong> Section A (4×10M=40M) + Section B (2×20M=40M)</p>
+    </div>
+
+    <h3>Section A – Short Answer Questions (4 Questions × 10 Marks)</h3>
+    <ol>
+      <li><strong>Define Software Engineering and explain software characteristics.</strong> (10M)
+        <ul>
+          <li>What is software? Intangible product vs. hardware</li>
+          <li>Characteristics: Developed not manufactured, Supports multiple platforms, Quality affects business</li>
+          <li>SDLC + team involvement required</li>
+        </ul>
+      </li>
+      <li><strong>Compare SDLC phases and Agile Methodology. List advantages of Agile over Waterfall.</strong> (10M ⭐)
+        <ul>
+          <li>SDLC phases: Requirement, Design, Implementation, Testing, Maintenance</li>
+          <li>Agile: Iterative, sprint-based, continuous feedback, adaptive</li>
+          <li>Waterfall: Sequential, document-heavy, rigid, easy to manage small projects</li>
+        </ul>
+      </li>
+      <li><strong>What is Black Box Testing and White Box Testing? Explain with examples.</strong> (10M ⭐)
+        <ul>
+          <li>Black Box: Test without knowing internal code, focus on input/output, user perspective</li>
+          <li>White Box: Test with code knowledge, structural testing, path coverage, developer-oriented</li>
+        </ul>
+      </li>
+      <li><strong>Explain Risk Management Process in Software Engineering with RMMM model.</strong> (10M ⭐)
+        <ul>
+          <li>Risk Identification, Analysis, Prioritization, Mitigation, Monitoring</li>
+          <li>RMMM: Risk Mitigation, Monitoring, Management</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>Section B – Long Answer Questions (2 Questions × 20 Marks)</h3>
+    <ol>
+      <li><strong>Explain CMMI (Capability Maturity Model Integration) levels and its significance in software development.</strong> (20M ⭐)
+        <ul>
+          <li>5 Levels: Initial, Repeatable, Defined, Managed, Optimizing</li>
+          <li>Significance: Quality improvement, Process standardization, Capability assessment</li>
+          <li>Each level requirements and key process areas</li>
+        </ul>
+      </li>
+      <li><strong>Discuss Integration Testing strategies and their importance in Software Testing Pyramid.</strong> (20M)
+        <ul>
+          <li>Big Bang, Top-Down, Bottom-Up integration approaches</li>
+          <li>Testing pyramid: Unit → Integration → System → Acceptance</li>
+          <li>Why integration testing is critical between unit and system testing</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <!-- PAPER 2: JULY 2024 -->
+  <div class="topic paper-topic">
+    <div class="topic-header">
+      <div class="topic-icon paper-topic-icon">📄</div>
+      <h2>Question Paper 2 – July 2024 Exam (Supplementary)</h2>
+      <span class="marks-badge">80 Marks · 150 Minutes</span>
+    </div>
+
+    <div class="paper-meta">
+      <p><strong>Exam Code:</strong> 22CS307 · <strong>Date:</strong> July 2024 (Supplementary) · <strong>Pattern:</strong> Section A (4×10M=40M) + Section B (2×20M=40M)</p>
+    </div>
+
+    <h3>Section A – Short Answer Questions (4 Questions × 10 Marks)</h3>
+    <ol>
+      <li><strong>Define Functional Requirements (FR) and Non-Functional Requirements (NFR) with examples.</strong> (10M ⭐)
+        <ul>
+          <li>FR: What system does – login, data processing, reporting</li>
+          <li>NFR: How well system does it – performance, security, scalability, reliability</li>
+        </ul>
+      </li>
+      <li><strong>Explain Scrum Framework and its artifacts, roles, and ceremonies.</strong> (10M ⭐)
+        <ul>
+          <li>Roles: Product Owner, Scrum Master, Development Team</li>
+          <li>Artifacts: Product Backlog, Sprint Backlog, Increment</li>
+          <li>Ceremonies: Sprint Planning, Daily Standup, Sprint Review, Sprint Retrospective</li>
+        </ul>
+      </li>
+      <li><strong>What are Scrum Metrics? Explain Sprint Velocity and Burn-down Chart.</strong> (10M)
+        <ul>
+          <li>Velocity: Story points completed per sprint, measure team productivity</li>
+          <li>Burn-down chart: Visual representation of work remaining vs. time</li>
+          <li>Burn-up chart: Work completed over time</li>
+        </ul>
+      </li>
+      <li><strong>Explain the purpose and benefits of Software Metrics in project management.</strong> (10M)
+        <ul>
+          <li>Measure quality, productivity, effort estimation</li>
+          <li>Track progress, identify risks early</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>Section B – Long Answer Questions (2 Questions × 20 Marks)</h3>
+    <ol>
+      <li><strong>Compare Waterfall Model and Agile Model with detailed advantages and disadvantages.</strong> (20M ⭐)
+        <ul>
+          <li>Waterfall: Sequential, predictable, document-heavy, inflexible to changes</li>
+          <li>Agile: Iterative, flexible, less documentation, customer-centric</li>
+          <li>When to use each model</li>
+        </ul>
+      </li>
+      <li><strong>Describe the Software Testing Pyramid and explain each level with examples.</strong> (20M)
+        <ul>
+          <li>Unit Testing (base): Individual functions, fastest, most numerous</li>
+          <li>Integration Testing: Module interactions, medium speed</li>
+          <li>System Testing: Complete system, slower</li>
+          <li>Acceptance Testing (top): User acceptance, slowest, least numerous</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <!-- PAPER 3: MAY 2025 -->
+  <div class="topic paper-topic">
+    <div class="topic-header">
+      <div class="topic-icon paper-topic-icon">📄</div>
+      <h2>Question Paper 3 – May 2025 Exam</h2>
+      <span class="marks-badge">60 Marks · 150 Minutes</span>
+    </div>
+
+    <div class="paper-meta">
+      <p><strong>Exam Code:</strong> 22CS307 · <strong>Date:</strong> May 2025 (Regular) · <strong>Pattern:</strong> Section A (4×8M=32M) + Section B (2×14M=28M)</p>
+    </div>
+
+    <h3>Section A – Short Answer Questions (4 Questions × 8 Marks)</h3>
+    <ol>
+      <li><strong>What are Software Myths? Explain any 5 myths in software development.</strong> (8M)
+        <ul>
+          <li>Myth: "We can add more developers to speed up project" → Brooks's Law</li>
+          <li>Myth: "SDLC only for large projects" → Applicable to all sizes</li>
+          <li>Myth: "Requirements can be gathered upfront" → Requirements evolve</li>
+          <li>List 5 and explain each</li>
+        </ul>
+      </li>
+      <li><strong>Define CMMI and its five levels. What is the significance?</strong> (8M)
+        <ul>
+          <li>5 Levels: Initial, Repeatable, Defined, Managed, Optimizing</li>
+          <li>Significance: Organization maturity, quality improvement, process capability</li>
+        </ul>
+      </li>
+      <li><strong>Compare Extreme Programming (XP) and Scrum Agile methodologies.</strong> (8M ⭐)
+        <ul>
+          <li>XP: Engineering practices, pair programming, TDD, continuous integration</li>
+          <li>Scrum: Framework for team collaboration, sprints, ceremonies, artifacts</li>
+          <li>XP focuses on technical excellence; Scrum on team management</li>
+        </ul>
+      </li>
+      <li><strong>What is a Gantt Chart? Explain its use in project planning and scheduling.</strong> (8M)
+        <ul>
+          <li>Horizontal bar chart showing project timeline</li>
+          <li>Shows tasks, duration, dependencies, milestones</li>
+          <li>Used for scheduling, monitoring, identifying critical path</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>Section B – Long Answer Questions (2 Questions × 14 Marks)</h3>
+    <ol>
+      <li><strong>Explain the complete SDLC process with all phases and their deliverables.</strong> (14M ⭐)
+        <ul>
+          <li>Requirements: Need analysis, SRS document</li>
+          <li>Design: Architecture, detailed design documents</li>
+          <li>Implementation: Code development, unit testing</li>
+          <li>Testing: System testing, QA, test reports</li>
+          <li>Deployment: Release, installation</li>
+          <li>Maintenance: Support, updates, bug fixes</li>
+        </ul>
+      </li>
+      <li><strong>Describe any 3 SDLC models (Waterfall, Iterative, Agile). Compare their approaches.</strong> (14M)
+        <ul>
+          <li>Waterfall: Sequential, phase-by-phase, best for fixed requirements</li>
+          <li>Iterative: Cycling through phases multiple times, feedback-driven</li>
+          <li>Agile: Sprint-based, customer collaboration, adaptive to changes</li>
+          <li>Comparison table with pros/cons</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <!-- PAPER 4: JULY 2025 -->
+  <div class="topic paper-topic">
+    <div class="topic-header">
+      <div class="topic-icon paper-topic-icon">📄</div>
+      <h2>Question Paper 4 – July 2025 Exam (Supplementary)</h2>
+      <span class="marks-badge">60 Marks · 150 Minutes</span>
+    </div>
+
+    <div class="paper-meta">
+      <p><strong>Exam Code:</strong> 22CS307 · <strong>Date:</strong> July 2025 (Supplementary) · <strong>Pattern:</strong> Section A (4×8M=32M) + Section B (2×14M=28M)</p>
+    </div>
+
+    <h3>Section A – Short Answer Questions (4 Questions × 8 Marks)</h3>
+    <ol>
+      <li><strong>What is Software Engineering? Explain its scope and importance.</strong> (8M)
+        <ul>
+          <li>Definition: Application of engineering principles to software development</li>
+          <li>Scope: Requirement analysis, design, development, testing, maintenance</li>
+          <li>Importance: Quality, cost control, time management, team coordination</li>
+        </ul>
+      </li>
+      <li><strong>Explain the Waterfall Model with its phases and advantages/disadvantages.</strong> (8M ⭐)
+        <ul>
+          <li>Phases: Requirements → Design → Development → Testing → Maintenance</li>
+          <li>Advantages: Simple, clear structure, easy to manage, documentation-heavy</li>
+          <li>Disadvantages: Inflexible, late defect discovery, no customer feedback during development</li>
+        </ul>
+      </li>
+      <li><strong>What is Requirement Engineering? List the requirement elicitation techniques.</strong> (8M)
+        <ul>
+          <li>Process of gathering, analyzing, documenting software requirements</li>
+          <li>Techniques: Interviews, questionnaires, observations, prototyping, focus groups, document analysis</li>
+        </ul>
+      </li>
+      <li><strong>Define Testing and explain its objectives and types.</strong> (8M)
+        <ul>
+          <li>Process of executing software to find defects</li>
+          <li>Objectives: Verify requirements, identify bugs, ensure quality</li>
+          <li>Types: Functional, non-functional, structural, behavioral</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>Section B – Long Answer Questions (2 Questions × 14 Marks)</h3>
+    <ol>
+      <li><strong>Explain Agile Methodology, Scrum framework, and its ceremonies/artifacts in detail.</strong> (14M ⭐)
+        <ul>
+          <li>Agile Principles: Individuals & interactions, Working software, Customer collaboration, Responding to change</li>
+          <li>Scrum Roles: Product Owner, Scrum Master, Development Team</li>
+          <li>Ceremonies: Sprint Planning, Daily Standup, Sprint Review, Retrospective</li>
+          <li>Artifacts: Product Backlog, Sprint Backlog, Increment</li>
+        </ul>
+      </li>
+      <li><strong>Discuss Software Quality Assurance (SQA) and its relationship with testing.</strong> (14M)
+        <ul>
+          <li>SQA: Process-focused, ensures processes are followed correctly</li>
+          <li>Testing: Product-focused, finds defects in the software</li>
+          <li>QA vs QC (Quality Control)</li>
+          <li>Best practices, standards (ISO, CMM)</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="info-box green paper-summary">
+    <strong>Preparation Strategy for Question Papers:</strong>
+    <ul>
+      <li><strong>Week 1-2:</strong> Solve Paper 1 & 2 (May/July 2024) to understand question patterns</li>
+      <li><strong>Week 3:</strong> Review answers, identify weak areas, study corresponding topics from this guide</li>
+      <li><strong>Week 4-5:</strong> Solve Paper 3 & 4 (May/July 2025) under exam conditions</li>
+      <li><strong>Week 6:</strong> Final revision, focus on 10M ⭐ questions, time management practice</li>
+      <li><strong>Tip:</strong> Most 10M and 14M/20M questions repeat across papers – master these patterns!</li>
+    </ul>
+  </div>
+
+  <!-- ===== UML DIAGRAMS ===== -->
+  <div class="module-header" id="uml-diagrams">
+    <div class="module-num uml-module-num">UML</div>
+    <div>
+      <h2>UML Diagrams</h2>
+      <p>Unified Modeling Language · Structural Diagrams · Behavioral Diagrams · Exam-Ready Notes</p>
+    </div>
+  </div>
+
+  <div class="info-box green">
+    <strong>Note:</strong> I couldn’t access the specific GeeksforGeeks UML article because the page is currently unavailable. This section gives you the same UML study content in a clean exam-friendly format.
+  </div>
+
+  <div class="info-box blue">
+    <strong>Reference articles:</strong>
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-introduction/" target="_blank" rel="noopener noreferrer">UML Introduction</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/use-case-diagram/" target="_blank" rel="noopener noreferrer">Use Case Diagram</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-class-diagrams/" target="_blank" rel="noopener noreferrer">Class Diagram</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-object-diagrams/" target="_blank" rel="noopener noreferrer">Object Diagram</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-sequence-diagrams/" target="_blank" rel="noopener noreferrer">Sequence Diagram</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-activity-diagrams/" target="_blank" rel="noopener noreferrer">Activity Diagram</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-state-diagrams/" target="_blank" rel="noopener noreferrer">State Diagram</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/software-engineering/component-based-diagram/" target="_blank" rel="noopener noreferrer">Component Diagram</a> ·
+    <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/deployment-diagram-unified-modeling-languageuml/" target="_blank" rel="noopener noreferrer">Deployment Diagram</a>
+  </div>
+
+  <div class="topic uml-topic">
+    <div class="topic-header">
+      <div class="topic-icon uml-topic-icon">📐</div>
+      <h2>UML Diagram Overview</h2>
+      <span class="marks-badge">10 Marks ⭐</span>
+    </div>
+
+    <p><strong>UML (Unified Modeling Language)</strong> is a standard visual modeling language used to represent the structure and behavior of a software system. It helps developers, analysts, and users understand the system before implementation.</p>
+
+    <h3>Why UML is used</h3>
+    <ul>
+      <li>Visualizes system requirements and design</li>
+      <li>Improves communication among stakeholders</li>
+      <li>Helps in documentation and maintenance</li>
+      <li>Supports object-oriented analysis and design</li>
+    </ul>
+
+    <h3>Types of UML Diagrams</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>GFG Link</th>
+      </tr>
+      <tr>
+        <td><strong>Use Case Diagram</strong></td>
+        <td>Shows actors and system functions from the user perspective</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/system-design/use-case-diagram/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+      <tr>
+        <td><strong>Class Diagram</strong></td>
+        <td>Shows classes, attributes, methods, and relationships</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-class-diagrams/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+      <tr>
+        <td><strong>Object Diagram</strong></td>
+        <td>Snapshot of objects and their relationships at a specific time</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-object-diagrams/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+      <tr>
+        <td><strong>Sequence Diagram</strong></td>
+        <td>Shows message flow between objects in time order</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-sequence-diagrams/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+      <tr>
+        <td><strong>Activity Diagram</strong></td>
+        <td>Represents workflow, actions, and decision flow</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-activity-diagrams/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+      <tr>
+        <td><strong>State Diagram</strong></td>
+        <td>Shows state changes of an object across events</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-state-diagrams/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+      <tr>
+        <td><strong>Component Diagram</strong></td>
+        <td>Shows system components and their dependencies</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/software-engineering/component-based-diagram/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+      <tr>
+        <td><strong>Deployment Diagram</strong></td>
+        <td>Shows hardware nodes and software deployment</td>
+        <td><a class="uml-link" href="https://www.geeksforgeeks.org/system-design/deployment-diagram-unified-modeling-languageuml/" target="_blank" rel="noopener noreferrer">Open link</a></td>
+      </tr>
+    </table>
+
+    <h3>UML Diagram Categories</h3>
+    <div class="adv-grid">
+      <div class="adv-box adv-pros">
+        <h5>Structural Diagrams</h5>
+        <ul>
+          <li>Class Diagram</li>
+          <li>Object Diagram</li>
+          <li>Component Diagram</li>
+          <li>Deployment Diagram</li>
+          <li>Package Diagram</li>
+        </ul>
+      </div>
+      <div class="adv-box adv-cons">
+        <h5>Behavioral Diagrams</h5>
+        <ul>
+          <li>Use Case Diagram</li>
+          <li>Sequence Diagram</li>
+          <li>Activity Diagram</li>
+          <li>State Diagram</li>
+          <li>Communication Diagram</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Structural Diagrams</h3>
+    <p>These diagrams describe the static structure of the system: classes, components, nodes, objects, and packages.</p>
+    <div class="uml-grid">
+      <div class="uml-card">
+        <h4>Class Diagram</h4>
+        <p>Shows classes, attributes, methods, and relationships.</p>
+        <pre class="mermaid">classDiagram
+class Student{
+  +name
+  +rollNo
+  +enroll()
+}
+class Course{
+  +code
+  +title
+}
+Student --> Course : enrolls</pre>
+        <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-class-diagrams/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>Object Diagram</h4>
+        <p>Shows a snapshot of objects at a specific moment.</p>
+        <pre class="mermaid">flowchart LR
+  obj1["student1:Student"]
+  obj2["course1:Course"]
+  obj1 -->|registered in| obj2</pre>
+          <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-object-diagrams/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>Component Diagram</h4>
+        <p>Shows system components and their dependencies.</p>
+        <pre class="mermaid">flowchart LR
+  UI[UI Component] --> API[API Component]
+  API --> DB[(Database)]</pre>
+          <a class="uml-link" href="https://www.geeksforgeeks.org/software-engineering/component-based-diagram/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>Deployment Diagram</h4>
+        <p>Shows how software is deployed onto hardware nodes.</p>
+        <pre class="mermaid">flowchart LR
+  Client[Client Node] --> Web[Web Server]
+  Web --> App[App Server]
+  App --> DB[(DB Server)]</pre>
+          <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/deployment-diagram-unified-modeling-languageuml/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>Package Diagram</h4>
+        <p>Groups related classes into packages and shows dependencies.</p>
+        <pre class="mermaid">flowchart TB
+  subgraph UI[UI Package]
+    A[Login]
+    B[Dashboard]
+  end
+  subgraph Core[Core Package]
+    C[Business Logic]
+    D[Data Access]
+  end
+  UI --> Core</pre>
+        <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/package-diagram-introduction-elements-use-cases-and-benefits/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+    </div>
+
+    <h3>Behavioral Diagrams</h3>
+    <p>These diagrams describe system behavior, interaction, and workflow over time.</p>
+    <div class="uml-grid">
+      <div class="uml-card">
+        <h4>Use Case Diagram</h4>
+        <p>Shows actors interacting with system functions.</p>
+        <pre class="mermaid">flowchart LR
+  User([User]) --> Login((Login))
+  User --> Search((Search))
+  User --> Buy((Purchase))</pre>
+          <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/use-case-diagram/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>Sequence Diagram</h4>
+        <p>Shows message flow between objects in time order.</p>
+        <pre class="mermaid">sequenceDiagram
+  actor User
+  participant UI
+  participant Auth
+  User->>UI: login()
+  UI->>Auth: validate()
+  Auth-->>UI: success
+  UI-->>User: dashboard</pre>
+          <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-sequence-diagrams/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>Activity Diagram</h4>
+        <p>Represents a workflow or process flow.</p>
+        <pre class="mermaid">flowchart TD
+  Start([Start]) --> Check{Valid?}
+  Check -- Yes --> Process[Process Data]
+  Process --> End([End])
+  Check -- No --> Reject[Show Error]
+  Reject --> End</pre>
+          <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-activity-diagrams/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>State Diagram</h4>
+        <p>Shows transitions between states of an object.</p>
+        <pre class="mermaid">stateDiagram-v2
+  [*] --> Idle
+  Idle --> Active: start
+  Active --> Idle: stop</pre>
+          <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-state-diagrams/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+      <div class="uml-card">
+        <h4>Communication Diagram</h4>
+        <p>Shows interaction flow between objects with numbered messages.</p>
+        <pre class="mermaid">flowchart LR
+  A[User] -->|1: request| B[UI]
+  B -->|2: validate| C[Controller]
+  C -->|3: store| D[(DB)]</pre>
+        <a class="uml-link" href="https://www.geeksforgeeks.org/system-design/communication-diagram-unified-modeling-languageuml/" target="_blank" rel="noopener noreferrer">GFG link</a>
+      </div>
+    </div>
+
+    <div class="info-box blue">
+      <strong>Quick revision:</strong> Structural diagrams explain what the system looks like; behavioral diagrams explain how the system behaves.
+    </div>
+
+    <div class="exam-tip">If asked to draw UML, first identify the diagram type, then label actors/classes, and finally show relationships clearly. For 10 marks, write definition + types + one small example.</div>
+  </div>
+
+</main>
+</body>
+</html>
